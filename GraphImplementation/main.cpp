@@ -2,7 +2,9 @@
 
 int main() {
     srand(time(NULL));
-    std::cout << "Hello world";
+    
+    Graph gr(10, false);
+    gr.printAdjMatrix();
 
     return 0;
 }

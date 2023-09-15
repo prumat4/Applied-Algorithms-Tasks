@@ -8,8 +8,11 @@
 class Graph {
 private:
     bool directed;
-    int numVertices;
-    std::vector<std::vector<int>> adjMatrix; 
+    unsigned int numVertices;
+    std::vector<std::vector<int>> adjMatrix;
+
+    void generateDirectedGraph();
+    void generateUndirectedGraph();
 
 public:
     int getNumVertices();
@@ -18,7 +21,6 @@ public:
 
     void printAdjMatrix();
 
-    Graph(int _numVertices);
-    // do we need default constructor?
-    // probably should be copy constructor
+    Graph(unsigned int _numVertices, bool _directed);
+    Graph(const Graph& other);
 };
