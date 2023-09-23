@@ -5,6 +5,9 @@
 #include <cmath>
 #include <random>
 
+#define MAX_WEIGHT float(100)
+#define MIN_WEIGHT float(-100)
+
 class Graph {
 protected:
     unsigned int numVertices;
@@ -36,8 +39,15 @@ public:
     UndirectedGraph(unsigned int _numVertices);
 
     bool isDirected() const override;
-    virtual void addEdge(const int from, const int to) override;
+    void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
+};
+
+class UndirectedWeightedGraph : public Graph {
+    UndirectedWeightedGraph(unsigned int _numVertices);
+
+    void addEdge(const int from, const int to, const int weight);
+    void ErdosRenyiModelGeneration(const float constant) override;
 };
 
 class DirectedGraph : public Graph {

@@ -93,6 +93,33 @@ void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
     }
 }
 
+void UndirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {
+    if (from == to)
+        return;
+
+    if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
+        adjMatrix.at(from).at(to) = adjMatrix.at(to).at(from) = weight;
+    }
+}
+
+void UndirectedWeightedGraph::ErdosRenyiModelGeneration(const float constant) {
+    std::random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_real_distribution<double> probabilityDistribution(0.0, 1.0);
+    std::uniform_real_distribution<double> weightDistribution(MIN_WEIGHT, MAX_WEIGHT);
+    float probability = calculateProbability(constant);
+
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = i + 1; j < numVertices; j++){
+            float randomValue = probabilityDistribution(gen); 
+            if(randomValue <= probability)  
+                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = weightDistribution(gen);
+            else 
+                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 0;
+        }
+    }
+}
+
 DirectedGraph::DirectedGraph(unsigned int _numVertices) : Graph::Graph(_numVertices) {}
 
 bool DirectedGraph::isDirected() const {
