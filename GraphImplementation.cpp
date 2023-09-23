@@ -109,15 +109,18 @@ void DirectedGraph::addEdge(const int from, const int to) {
 }
 
 void DirectedGraph::ErdosRenyiModelGeneration(const float constant) {
-    std::random_device randomDevice;
+   std::random_device randomDevice;
     std::mt19937 gen(randomDevice());
     std::uniform_real_distribution<double> distribution(0.0, 1.0);
     float probability = calculateProbability(constant);
 
-    for(auto& row : adjMatrix) {
-        for(auto& edge : row) {
-           float randomValue = distribution(gen); 
-           randomValue <= probability ? edge = 1 : edge = 0; 
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = 0; j < numVertices; j++){
+            float randomValue = distribution(gen); 
+            if(randomValue <= probability && i != j)  
+                adjMatrix.at(i).at(j) = 1;
+            else 
+                adjMatrix.at(i).at(j) = 0;
         }
     }
 }
