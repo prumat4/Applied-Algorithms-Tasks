@@ -37,5 +37,13 @@ int main() {
     std::cout << "directed graph examples:\n";
     clientCode(dg);
 
+    UndirectedWeightedGraph* uwg = new UndirectedWeightedGraph(10);
+    std::cout << "undirected weighted graph examples:\n";
+    clientCode(uwg);
+
+    DirectedWeightedGraph* dwg = new DirectedWeightedGraph(10);
+    std::cout << "directed weighted graph examples:\n";
+    clientCode(dwg);
+
     return 0;
 }
