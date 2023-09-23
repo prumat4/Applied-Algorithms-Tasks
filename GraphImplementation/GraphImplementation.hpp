@@ -13,10 +13,10 @@ protected:
 
 public:
     Graph(unsigned int _numVertices, bool _directed);
-    virtual ~Graph();
+    ~Graph();
 
-    int getNumVertices() const;
     virtual bool isDirected() const = 0;
+    int getNumVertices() const;
     std::vector<std::vector<int>> getAdjMatrix() const;
 
     virtual void addEdge(const int from, const int to) = 0;
@@ -37,7 +37,6 @@ private:
 
 public:
     UndirectedGraph(unsigned int _numVertices);
-    ~UndirectedGraph();
 
     bool isDirected() const override;
 

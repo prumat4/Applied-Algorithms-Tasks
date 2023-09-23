@@ -31,42 +31,24 @@ float Graph::calculateProbability(const float constant) {
     return (std::log(numVertices)  * constant) / numVertices;
 }
 
-void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
-    std::random_device randomDevice;
-    std::mt19937 gen(randomDevice());
-    std::uniform_real_distribution<double> distribution(0.0, 1.0);
-    float probability = calculateProbability(constant);
-
-    for(int i = 0; i < numVertices; i++) {
-        for(int j = i + 1; j < numVertices; j++){
-            float randomValue = distribution(gen); 
-            if(randomValue <= probability)  
-                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 1;
-            else 
-                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 0;
-        }
-    }
-}
-
 UndirectedGraph::UndirectedGraph(unsigned int _numVertices) : Graph(_numVertices, false) {}
-
-UndirectedGraph::~UndirectedGraph() {}
 
 bool UndirectedGraph::isDirected() const {
     return false;
 }
 
 void UndirectedGraph::addEdge(int from, int to) {
+    if (from == to)
+        return;
+
     if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
-        adjMatrix.at(from).at(to) = 1;
-        adjMatrix.at(to).at(from) = 1;
+        adjMatrix.at(from).at(to) = adjMatrix.at(to).at(from) = 1;
     }
 }
 
 void UndirectedGraph::removeEdge(int from, int to) {
     if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
-        adjMatrix.at(from).at(to) = 0;
-        adjMatrix.at(to).at(from) = 0;
+        adjMatrix.at(from).at(to) = adjMatrix.at(to).at(from) = 0;
     }
 }
 
@@ -78,9 +60,6 @@ bool UndirectedGraph::containsEdge(int from, int to) const {
 }
 
 void UndirectedGraph::addVertex() {
-    // push 'empty vector'
-    // increase numVertices
-    // for each row push back one zero
     adjMatrix.push_back(std::vector<int>(numVertices, 0));
     numVertices++;
 
@@ -98,5 +77,23 @@ void UndirectedGraph::removeVertex(int vertex) {
 
     numVertices--;
 } 
+
+
+void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
+    std::random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    float probability = calculateProbability(constant);
+
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = i + 1; j < numVertices; j++){
+            float randomValue = distribution(gen); 
+            if(randomValue <= probability)  
+                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 1;
+            else 
+                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 0;
+        }
+    }
+}
 
 
