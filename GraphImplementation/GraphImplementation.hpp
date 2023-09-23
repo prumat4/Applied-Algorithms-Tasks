@@ -5,26 +5,28 @@
 #include <cmath>
 #include <random>
 
+#define MAX_WEIGHT float(100)
+#define MIN_WEIGHT float(-100)
+
 class Graph {
 protected:
     unsigned int numVertices;
-    bool directed;
     std::vector<std::vector<int>> adjMatrix;
 
 public:
-    Graph(unsigned int _numVertices, bool _directed);
-    virtual ~Graph();
+    Graph(unsigned int _numVertices);
+    ~Graph() = default;
 
-    int getNumVertices() const;
     virtual bool isDirected() const = 0;
+    int getNumVertices() const;
     std::vector<std::vector<int>> getAdjMatrix() const;
 
     virtual void addEdge(const int from, const int to) = 0;
-    virtual void removeEdge(const int from, const int to) = 0;
-    virtual bool containsEdge(const int from, const int to) const = 0;
+    void removeEdge(const int from, const int to);
+    bool containsEdge(const int from, const int to) const;
 
-    virtual void addVertex() = 0;
-    virtual void removeVertex(const int vertex) = 0;
+    void addVertex();
+    void removeVertex(const int vertex);
 
     float calculateProbability(const float constant);
     virtual void ErdosRenyiModelGeneration(const float constant) = 0;
@@ -33,20 +35,35 @@ public:
 };
 
 class UndirectedGraph : public Graph {
-private:
-
 public:
     UndirectedGraph(unsigned int _numVertices);
-    ~UndirectedGraph();
 
     bool isDirected() const override;
-
     void addEdge(const int from, const int to) override;
-    void removeEdge(const int from, const int to) override;
-    bool containsEdge(const int from, const int to) const override;
+    virtual void ErdosRenyiModelGeneration(const float constant) override;
+};
 
-    void addVertex() override;
-    void removeVertex(const int vertex) override;
+class UndirectedWeightedGraph : public UndirectedGraph {
+public:
+    UndirectedWeightedGraph(unsigned int _numVertices);
 
+    void addEdge(const int from, const int to, const int weight);
+    void ErdosRenyiModelGeneration(const float constant) override;
+};
+
+class DirectedGraph : public Graph {
+public: 
+    DirectedGraph(unsigned int _numVertices);
+
+    bool isDirected() const override;
+    virtual void addEdge(const int from, const int to) override;
+    virtual void ErdosRenyiModelGeneration(const float constant) override;
+};
+
+class DirectedWeightedGraph : public DirectedGraph {
+public:
+    DirectedWeightedGraph(unsigned int _numVertices);
+
+    void addEdge(const int from, const int to, const int weight);
     void ErdosRenyiModelGeneration(const float constant) override;
 };
