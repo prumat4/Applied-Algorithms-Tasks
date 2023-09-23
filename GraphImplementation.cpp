@@ -51,7 +51,7 @@ void Graph::addVertex() {
 void Graph::printAdjMatrix() const {
     for (const auto& row : adjMatrix) {
         for (const auto& edge : row) {
-            std::cout << edge << ' ';
+            std::cout << edge << "\t";
         }
         std::cout << std::endl;
     }

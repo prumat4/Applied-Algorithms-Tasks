@@ -44,6 +44,7 @@ public:
 };
 
 class UndirectedWeightedGraph : public UndirectedGraph {
+public:
     UndirectedWeightedGraph(unsigned int _numVertices);
 
     void addEdge(const int from, const int to, const int weight);
@@ -60,6 +61,7 @@ public:
 };
 
 class DirectedWeightedGraph : public DirectedGraph {
+public:
     DirectedWeightedGraph(unsigned int _numVertices);
 
     void addEdge(const int from, const int to, const int weight);
