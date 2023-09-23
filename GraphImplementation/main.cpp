@@ -1,10 +1,14 @@
 #include "GraphImplementation.hpp"
 
 int main() {
-    srand(time(NULL));
     
-    Graph gr(10, false);
-    gr.printAdjMatrix();
+    UndirectedGraph ug(10);
+    ug.printAdjMatrix();
+
+    std::cout << std::endl;
+    
+    ug.ErdosRenyiModelGeneration(1);
+    ug.printAdjMatrix();
 
     return 0;
 }

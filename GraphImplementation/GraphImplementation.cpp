@@ -1,55 +1,99 @@
 #include "GraphImplementation.hpp"
 
-int Graph::getNumVertices() {
+Graph::Graph(unsigned int _numVertices, bool _directed) : numVertices(_numVertices), directed(_directed) {
+    adjMatrix.reserve(numVertices + int(numVertices * 0.2));
+    adjMatrix = std::vector<std::vector<int>>(numVertices, std::vector<int>(numVertices, 0));
+
+    for(auto& row : adjMatrix)
+        row.reserve(numVertices + int(numVertices * 0.2));
+}
+
+Graph::~Graph() {}
+
+int Graph::getNumVertices() const {
     return numVertices;
 }
 
-bool Graph::isDirected() {
-    return directed;
-}
-
-std::vector<std::vector<int>> Graph::getAdjMatrix() {
+std::vector<std::vector<int>> Graph::getAdjMatrix() const {
     return adjMatrix;
 }
 
-void Graph::printAdjMatrix() {
-    for(auto vector : adjMatrix) {
-        for(auto element : vector) {
-            std::cout << element << " ";
+void Graph::printAdjMatrix() const {
+    for (const auto& row : adjMatrix) {
+        for (const auto& edge : row) {
+            std::cout << edge << ' ';
         }
         std::cout << std::endl;
     }
 }
 
-void Graph::generateDirectedGraph(){
-    for(int i = 0; i < numVertices; i++) {
-        for(int j = 0; j < numVertices; j++){
-            if(i == j)
-                adjMatrix.at(i).at(j) = 0;
-            else 
-                adjMatrix.at(i).at(j) = rand() % 2;
+float Graph::calculateProbability(const float constant) {
+    return (std::log(numVertices)  * constant) / numVertices;
+}
+
+void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
+    std::random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    float probability = calculateProbability(constant);
+
+    for(auto& row : adjMatrix) {
+        for(auto& edge : row) {
+            float randomValue = distribution(gen); 
+            randomValue <= probability ? edge = 1 : edge = 0;
         }
     }
 }
 
-void Graph::generateUndirectedGraph() {
-    for(int i = 0; i < numVertices; i++) {
-        for(int j = i + 1; j < numVertices; j++){
-            adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = rand() % 2;
-        }
+UndirectedGraph::UndirectedGraph(unsigned int _numVertices) : Graph(_numVertices, false) {}
+
+UndirectedGraph::~UndirectedGraph() {}
+
+bool UndirectedGraph::isDirected() const {
+    return false;
+}
+
+void UndirectedGraph::addEdge(int from, int to) {
+    if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
+        adjMatrix.at(from).at(to) = 1;
+        adjMatrix.at(to).at(from) = 1;
     }
 }
 
-Graph::Graph(unsigned int _numVertices, bool _directed) {
-    numVertices = _numVertices;
-    directed = _directed;
-    adjMatrix.resize(numVertices, std::vector<int>(numVertices, 0));
-
-    directed ? generateDirectedGraph() : generateUndirectedGraph();
+void UndirectedGraph::removeEdge(int from, int to) {
+    if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
+        adjMatrix.at(from).at(to) = 0;
+        adjMatrix.at(to).at(from) = 0;
+    }
 }
 
-Graph::Graph(const Graph &other) {
-    numVertices = other.numVertices;
-    directed = other.directed;
-    adjMatrix = other.adjMatrix;
+bool UndirectedGraph::containsEdge(int from, int to) const {
+    if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
+        return adjMatrix.at(from).at(to) == 1;
+    }
+    return false;
 }
+
+void UndirectedGraph::addVertex() {
+    // push 'empty vector'
+    // increase numVertices
+    // for each row push back one zero
+    adjMatrix.push_back(std::vector<int>(numVertices, 0));
+    numVertices++;
+
+    for(auto& row : adjMatrix) {
+        row.push_back(0);
+    }
+}
+
+void UndirectedGraph::removeVertex(int vertex) {
+    if(vertex >= 0 && vertex <= numVertices) {
+        adjMatrix.erase(adjMatrix.begin() + vertex);
+        for(auto& row : adjMatrix)
+            row.erase(row.begin() + vertex);
+    }
+
+    numVertices--;
+} 
+
+
