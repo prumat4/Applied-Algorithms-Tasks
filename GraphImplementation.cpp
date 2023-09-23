@@ -93,6 +93,8 @@ void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
     }
 }
 
+UndirectedWeightedGraph::UndirectedWeightedGraph(unsigned int _numVertices) : UndirectedGraph(_numVertices) {}
+
 void UndirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {
     if (from == to)
         return;
@@ -146,6 +148,35 @@ void DirectedGraph::ErdosRenyiModelGeneration(const float constant) {
             float randomValue = distribution(gen); 
             if(randomValue <= probability && i != j)  
                 adjMatrix.at(i).at(j) = 1;
+            else 
+                adjMatrix.at(i).at(j) = 0;
+        }
+    }
+}
+
+DirectedWeightedGraph::DirectedWeightedGraph(unsigned int _numVertices) : DirectedGraph(_numVertices) {}
+
+void DirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {
+    if (from == to)
+        return;
+
+    if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
+        adjMatrix.at(from).at(to) = weight;
+    }
+}
+
+void DirectedWeightedGraph::ErdosRenyiModelGeneration(const float constant) {
+    std::random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_real_distribution<double> probabilityDistribution(0.0, 1.0);
+    std::uniform_real_distribution<double> weightDistribution(MIN_WEIGHT, MAX_WEIGHT);
+    float probability = calculateProbability(constant);
+
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = 0; j < numVertices; j++){
+            float randomValue = probabilityDistribution(gen); 
+            if(randomValue <= probability && i != j)  
+                adjMatrix.at(i).at(j) = weightDistribution(gen);
             else 
                 adjMatrix.at(i).at(j) = 0;
         }

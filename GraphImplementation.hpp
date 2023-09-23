@@ -43,7 +43,7 @@ public:
     virtual void ErdosRenyiModelGeneration(const float constant) override;
 };
 
-class UndirectedWeightedGraph : public Graph {
+class UndirectedWeightedGraph : public UndirectedGraph {
     UndirectedWeightedGraph(unsigned int _numVertices);
 
     void addEdge(const int from, const int to, const int weight);
@@ -57,4 +57,11 @@ public:
     bool isDirected() const override;
     virtual void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
+};
+
+class DirectedWeightedGraph : public DirectedGraph {
+    DirectedWeightedGraph(unsigned int _numVertices);
+
+    void addEdge(const int from, const int to, const int weight);
+    void ErdosRenyiModelGeneration(const float constant) override;
 };
