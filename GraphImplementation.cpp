@@ -67,7 +67,7 @@ bool UndirectedGraph::isDirected() const {
     return false;
 }
 
-void UndirectedGraph::addEdge(int from, int to) {
+void Graph::addEdge(int from, int to) {
     if (from == to)
         return;
 
@@ -99,14 +99,25 @@ bool DirectedGraph::isDirected() const {
     return true;
 }
 
-void DirectedGraph::addEdge(int from, int to) {
+void Graph::addEdge(int from, int to) {
     if (from == to)
         return;
 
     if (from >= 0 && from < numVertices && to >= 0 && to < numVertices) {
         adjMatrix.at(from).at(to) = 1;
-        adjMatrix.at(to).at(from) = -1;
     }
 }
 
+void DirectedGraph::ErdosRenyiModelGeneration(const float constant) {
+    std::random_device randomDevice;
+    std::mt19937 gen(randomDevice());
+    std::uniform_real_distribution<double> distribution(0.0, 1.0);
+    float probability = calculateProbability(constant);
 
+    for(auto& row : adjMatrix) {
+        for(auto& edge : row) {
+           float randomValue = distribution(gen); 
+           randomValue <= probability ? edge = 1 : edge = 0; 
+        }
+    }
+}
