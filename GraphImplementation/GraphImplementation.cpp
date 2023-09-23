@@ -37,10 +37,13 @@ void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
     std::uniform_real_distribution<double> distribution(0.0, 1.0);
     float probability = calculateProbability(constant);
 
-    for(auto& row : adjMatrix) {
-        for(auto& edge : row) {
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = i + 1; j < numVertices; j++){
             float randomValue = distribution(gen); 
-            randomValue <= probability ? edge = 1 : edge = 0;
+            if(randomValue <= probability)  
+                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 1;
+            else 
+                adjMatrix.at(i).at(j) = adjMatrix.at(j).at(i) = 0;
         }
     }
 }
