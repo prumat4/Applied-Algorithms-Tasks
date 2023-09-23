@@ -36,8 +36,8 @@ public:
     UndirectedGraph(unsigned int _numVertices);
 
     bool isDirected() const override;
-    void addEdge(const int from, const int to) override;
-    void ErdosRenyiModelGeneration(const float constant) override;
+    virtual void addEdge(const int from, const int to) override;
+    virtual void ErdosRenyiModelGeneration(const float constant) override;
 };
 
 class DirectedGraph : public Graph {
@@ -45,6 +45,6 @@ public:
     DirectedGraph(unsigned int _numVertices);
 
     bool isDirected() const override;
-    void addEdge(const int from, const int to) override;
-    void ErdosRenyiModelGeneration(const float constant) override;
-} ;
+    virtual void addEdge(const int from, const int to) override;
+    virtual void ErdosRenyiModelGeneration(const float constant) override;
+};
