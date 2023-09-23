@@ -67,7 +67,7 @@ bool UndirectedGraph::isDirected() const {
     return false;
 }
 
-void Graph::addEdge(int from, int to) {
+void Graph::addEdge(const int from, const int to) {
     if (from == to)
         return;
 
@@ -99,7 +99,7 @@ bool DirectedGraph::isDirected() const {
     return true;
 }
 
-void Graph::addEdge(int from, int to) {
+void Graph::addEdge(const int from, const int to) {
     if (from == to)
         return;
 
