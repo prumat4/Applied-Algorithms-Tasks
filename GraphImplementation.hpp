@@ -31,6 +31,7 @@ public:
     float calculateProbability(const float constant);
     virtual void ErdosRenyiModelGeneration(const float constant) = 0;
 
+    virtual void getAdjList() const = 0;
     void printAdjMatrix() const;
 };
 
@@ -41,6 +42,7 @@ public:
     bool isDirected() const override;
     void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
+    void getAdjList() const override;
 };
 
 class UndirectedWeightedGraph : public UndirectedGraph {
@@ -58,6 +60,7 @@ public:
     bool isDirected() const override;
     virtual void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
+    void getAdjList() const override;
 };
 
 class DirectedWeightedGraph : public DirectedGraph {

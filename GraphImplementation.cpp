@@ -93,6 +93,20 @@ void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
     }
 }
 
+void UndirectedGraph::getAdjList() const {
+    std::vector<std::vector<int>> adjList(numVertices);
+
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = 0; j < numVertices; j++) {
+            if (adjMatrix.at(i).at(j) != 0) {
+                adjList.at(i).push_back(j);
+                adjList.at(j).push_back(i);
+            }
+        }
+    }
+}
+
+
 UndirectedWeightedGraph::UndirectedWeightedGraph(unsigned int _numVertices) : UndirectedGraph(_numVertices) {}
 
 void UndirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {
@@ -150,6 +164,18 @@ void DirectedGraph::ErdosRenyiModelGeneration(const float constant) {
                 adjMatrix.at(i).at(j) = 1;
             else 
                 adjMatrix.at(i).at(j) = 0;
+        }
+    }
+}
+
+void DirectedGraph::getAdjList() const {
+    std::vector<std::vector<int>> adjList(numVertices);
+
+    for(int i = 0; i < numVertices; i++) {
+        for(int j = 0; j < numVertices; j++) {
+            if (adjMatrix.at(i).at(j) != 0) {
+                adjList.at(i).push_back(j);
+            }
         }
     }
 }
