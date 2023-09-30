@@ -82,7 +82,7 @@ int main() {
     graph2.addEdge(7, 3);
     graph2.addEdge(7, 6);
     graph2.addEdge(5, 7);
-    graph2.printAdjMatrix();
+    // graph2.printAdjMatrix();
 
     auto enumeration2 = graph2.DemukronsAlgorithm();
 

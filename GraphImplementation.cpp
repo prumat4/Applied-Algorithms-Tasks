@@ -272,6 +272,37 @@ std::vector<int> DirectedGraph::DemukronsAlgorithm() {
     return enumeration;
 }
 
+// std::vector<int> DirectedGraph::DemukronsAlgorithm() {
+//     std::vector<int> enumeration(numVertices, 0);    
+//     auto indegs = getIndegs();
+    
+//     std::vector<int> vertices;
+//     for(int i = 0; i < numVertices; i++) 
+//         vertices.push_back(i);
+
+//     int number = 1;
+
+//     while(!vertices.empty()) {
+//         std::vector<int> verticesToRemove;
+
+//         for(auto it = vertices.begin(); it != vertices.end(); ++it) {
+//             if (indegs[*it] == 0) {
+//                 enumeration[*it] = number;
+//                 number++;
+//                 verticesToRemove.push_back(*it);
+//                 correctDifference(indegs, *it);
+//             }
+//         }
+
+//         for (const auto& ver : verticesToRemove) {
+//             vertices.erase(std::remove(vertices.begin(), vertices.end(), ver), vertices.end());
+//         }
+//     }    
+
+//     return enumeration;
+// }
+
+
 DirectedWeightedGraph::DirectedWeightedGraph(unsigned int _numVertices) : DirectedGraph(_numVertices) {}
 
 void DirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {
