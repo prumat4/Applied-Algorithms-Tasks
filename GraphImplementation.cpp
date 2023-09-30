@@ -248,25 +248,25 @@ std::vector<int> DirectedGraph::DemukronsAlgorithm() {
     std::vector<int> enumeration(numVertices, 0);    
     auto indegs = getIndegs();
     
+    std::set<int> verticesToRemove;
     std::set<int> vertices;
     for(int i = 0; i < numVertices; i++) 
-        vertices.emplace(i);
+        vertices.insert(i);
 
-    int number = 0;
+    int number = 1;
 
-    while(vertices.size() != 0) {
-        auto indegs_ = indegs;
-        
-        for(auto it = vertices.begin(); it != vertices.end(); ++it) {
-            if(vertices.contains(*it) && indegs_.at(*it) == 0) {
-                enumeration.at(*it) = number;
-
-                std::cout << number << " ";
+    while(!vertices.empty()) {
+        for(int i = 0; i < numVertices; i++) {
+            if(vertices.contains(i) && indegs.at(i) == 0) {
+                enumeration.at(i) = number;
                 number++;
-                // vertices.erase(*it);
-                correctDifference(indegs_, *it);
+                verticesToRemove.insert(i);
+                correctDifference(indegs, i);
             }
         }
+
+        for(const auto& ver : verticesToRemove)
+            vertices.erase(ver);
     }    
 
     return enumeration;
