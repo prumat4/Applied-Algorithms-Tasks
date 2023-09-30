@@ -57,6 +57,9 @@ public:
 class DirectedGraph : public Graph {
 private:
     void DFSRecursive(const int vertex, int& number, std::vector<bool>& isSelectedVertice, std::vector<int>& enumeration);
+    void correctDifference(std::vector<int>& vec, const int pos);
+    std::vector<int> getIndegs();
+    bool contains(const std::vector<int>& vec, const int val);
 public: 
     DirectedGraph(unsigned int _numVertices);
 
@@ -66,6 +69,7 @@ public:
     void getAdjList() const override;
 
     std::vector<int> DFSEnumeration();
+    std::vector<int> DemukronsAlgorithm();
 };
 
 class DirectedWeightedGraph : public DirectedGraph {

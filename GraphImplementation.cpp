@@ -106,7 +106,6 @@ void UndirectedGraph::getAdjList() const {
     }
 }
 
-
 UndirectedWeightedGraph::UndirectedWeightedGraph(unsigned int _numVertices) : UndirectedGraph(_numVertices) {}
 
 void UndirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {
@@ -212,6 +211,63 @@ std::vector<int> DirectedGraph::DFSEnumeration() {
         if(isSelectedVertice.at(i) == false) 
             DFSRecursive(i, number, isSelectedVertice, enumeration);
     }
+
+    return enumeration;
+}
+
+std::vector<int> DirectedGraph::getIndegs() {
+    std::vector<int> indegs(numVertices, 0);
+
+    for(int j = 0; j < indegs.size(); j++) {
+        int indeg = 0;
+        for(int i = 0; i < indegs.size(); i++) {
+            indeg += adjMatrix.at(i).at(j);    
+        }
+        indegs.at(j) = indeg;
+    }
+
+    return indegs;
+}
+
+void DirectedGraph::correctDifference(std::vector<int>& vec, const int pos) {
+    for(int i = 0; i < numVertices; i++) {
+        vec.at(i) -= adjMatrix.at(pos).at(i);
+    }
+}
+
+bool DirectedGraph::contains(const std::vector<int>& vec, int val) {
+    for(auto el : vec) {
+        if(el == val)
+            return true;
+    }
+
+    return false;
+}
+
+std::vector<int> DirectedGraph::DemukronsAlgorithm() {
+    std::vector<int> enumeration(numVertices, 0);    
+    auto indegs = getIndegs();
+    
+    std::set<int> vertices;
+    for(int i = 0; i < numVertices; i++) 
+        vertices.emplace(i);
+
+    int number = 0;
+
+    while(vertices.size() != 0) {
+        auto indegs_ = indegs;
+        
+        for(auto it = vertices.begin(); it != vertices.end(); ++it) {
+            if(vertices.contains(*it) && indegs_.at(*it) == 0) {
+                enumeration.at(*it) = number;
+
+                std::cout << number << " ";
+                number++;
+                // vertices.erase(*it);
+                correctDifference(indegs_, *it);
+            }
+        }
+    }    
 
     return enumeration;
 }

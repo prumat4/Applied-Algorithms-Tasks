@@ -68,5 +68,28 @@ int main() {
         std::cout << element << " ";
     std::cout << std::endl;
     
+    DirectedGraph graph2(8);
+    graph2.addEdge(0, 1);
+    graph2.addEdge(2, 0);
+    graph2.addEdge(1, 4);
+    graph2.addEdge(3, 4);
+    graph2.addEdge(3, 1);
+    graph2.addEdge(0, 3);
+    graph2.addEdge(2, 5);
+    graph2.addEdge(5, 3);
+    graph2.addEdge(6, 3);
+    graph2.addEdge(6, 4);
+    graph2.addEdge(7, 3);
+    graph2.addEdge(7, 6);
+    graph2.addEdge(5, 7);
+    graph2.printAdjMatrix();
+
+    auto enumeration2 = graph2.DemukronsAlgorithm();
+
+    std::cout << "Demukron's Algorithm output: ";
+    for(auto element : enumeration2)
+        std::cout << element << " ";
+    std::cout << std::endl;
+
     return 0;
 }
