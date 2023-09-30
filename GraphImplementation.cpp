@@ -180,6 +180,42 @@ void DirectedGraph::getAdjList() const {
     }
 }
 
+void DirectedGraph::DFSRecursive(int vertex, int& number, std::vector<bool> &isSelectedVertice, std::vector<int>& enumeration) {
+    isSelectedVertice.at(vertex) = true;
+    // mb instead of numVertices use number
+    std::vector<bool> isVisitedVertice(numVertices, false);
+    
+    for(int i = 0; i < numVertices; i++) {
+        if(adjMatrix.at(vertex).at(i) == 1 && isVisitedVertice.at(i) == true) {
+            std::cout << "Error: There is a cycle in the graph! Exiting...\n";
+            return;
+        }
+    }
+
+    for(int i = 0; i < numVertices; i++) {
+        if(adjMatrix.at(vertex).at(i) == 1 && isSelectedVertice.at(i) == false) {
+            DFSRecursive(i, number, isSelectedVertice, enumeration);
+        }
+    }
+
+    enumeration.at(vertex) = number;
+    number--;
+}
+
+std::vector<int> DirectedGraph::DFSEnumeration() {
+    std::vector<int> enumeration(numVertices, 0);
+    std::vector<bool> isSelectedVertice(numVertices, false);
+
+    int number = numVertices;
+
+    for(int i = 0; i < numVertices; i++) {
+        if(isSelectedVertice.at(i) == false) 
+            DFSRecursive(i, number, isSelectedVertice, enumeration);
+    }
+
+    return enumeration;
+}
+
 DirectedWeightedGraph::DirectedWeightedGraph(unsigned int _numVertices) : DirectedGraph(_numVertices) {}
 
 void DirectedWeightedGraph::addEdge(const int from, const int to, const int weight) {

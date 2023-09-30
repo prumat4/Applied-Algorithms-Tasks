@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <set>
 #include <cmath>
 #include <random>
 
@@ -54,6 +55,8 @@ public:
 };
 
 class DirectedGraph : public Graph {
+private:
+    void DFSRecursive(const int vertex, int& number, std::vector<bool>& isSelectedVertice, std::vector<int>& enumeration);
 public: 
     DirectedGraph(unsigned int _numVertices);
 
@@ -61,6 +64,8 @@ public:
     virtual void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
     void getAdjList() const override;
+
+    std::vector<int> DFSEnumeration();
 };
 
 class DirectedWeightedGraph : public DirectedGraph {
