@@ -93,7 +93,7 @@ void UndirectedGraph::ErdosRenyiModelGeneration(const float constant) {
     }
 }
 
-void UndirectedGraph::getAdjList() const {
+std::vector<std::vector<int>> UndirectedGraph::getAdjList() const {
     std::vector<std::vector<int>> adjList(numVertices);
 
     for(int i = 0; i < numVertices; i++) {
@@ -104,6 +104,8 @@ void UndirectedGraph::getAdjList() const {
             }
         }
     }
+    
+    return adjList;
 }
 
 UndirectedWeightedGraph::UndirectedWeightedGraph(unsigned int _numVertices) : UndirectedGraph(_numVertices) {}
@@ -167,7 +169,7 @@ void DirectedGraph::ErdosRenyiModelGeneration(const float constant) {
     }
 }
 
-void DirectedGraph::getAdjList() const {
+std::vector<std::vector<int>> DirectedGraph::getAdjList() const {
     std::vector<std::vector<int>> adjList(numVertices);
 
     for(int i = 0; i < numVertices; i++) {
@@ -177,6 +179,8 @@ void DirectedGraph::getAdjList() const {
             }
         }
     }
+
+    return adjList;
 }
 
 void DirectedGraph::DFSRecursive(int vertex, int& number, std::vector<bool> &isSelectedVertice, std::vector<int>& enumeration) {

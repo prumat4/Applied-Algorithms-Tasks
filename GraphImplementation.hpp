@@ -32,7 +32,7 @@ public:
     float calculateProbability(const float constant);
     virtual void ErdosRenyiModelGeneration(const float constant) = 0;
 
-    virtual void getAdjList() const = 0;
+    virtual std::vector<std::vector<int>> getAdjList() const = 0;
     void printAdjMatrix() const;
 };
 
@@ -43,7 +43,7 @@ public:
     bool isDirected() const override;
     void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
-    void getAdjList() const override;
+    std::vector<std::vector<int>> getAdjList() const override;
 };
 
 class UndirectedWeightedGraph : public UndirectedGraph {
@@ -59,14 +59,13 @@ private:
     void DFSRecursive(const int vertex, int& number, std::vector<bool>& isSelectedVertice, std::vector<int>& enumeration);
     void correctDifference(std::vector<int>& vec, const int pos);
     std::vector<int> getIndegs();
-    bool contains(const std::vector<int>& vec, const int val);
 public: 
     DirectedGraph(unsigned int _numVertices);
 
     bool isDirected() const override;
     virtual void addEdge(const int from, const int to) override;
     virtual void ErdosRenyiModelGeneration(const float constant) override;
-    void getAdjList() const override;
+    std::vector<std::vector<int>> getAdjList() const override;
 
     std::vector<int> DFSEnumeration();
     std::vector<int> DemukronsAlgorithm();
