@@ -1,0 +1,57 @@
+\documentclass{article}
+\usepackage[english,ukrainian]{babel}
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Реалізація структури графу}
+\author{ФІ-13 Дідух Максим}
+
+\begin{document}
+\maketitle
+
+\section{Вступ}
+\quad Для реалізації структури графу я обрав представлення у вигляді матриці суміжності. Я обрав цей варіант тому, що реалізація структури та базових операцій є досить простою. Якщо ж є потреба використовувати список суміжності, то є можливість конвертувати матрицю суміжності в список суміжності та навпаки.
+
+\section{Опис складності роботи основних операцій}
+\quad Нехай граф має \(N\) вершин.
+
+\begin{itemize}
+    \item containsEdge(): \(\mathcal{O}(1)\)
+    \item addVertex(): \(\mathcal{O}(N^2)\)
+    \item removeVertex(): \(\mathcal{O}(N^2)\)
+    \item getAdjList(): \(\mathcal{O}(N^2)\)
+    \item removeEdge(): \(\mathcal{O}(1)\)
+    \item addEdge(): \(\mathcal{O}(1)\)
+\end{itemize}
+
+\section{Порівняння алгоритмів топологічного сортування}
+\quad У цьому пункті будемо порівнювати алгоритми топологічного сортування, що використовує DFSRecursive та алгоритм Демукрона. Одиницею вимірювання буде середній час роботи алгоритму на певному графі. Для кожного \(N\) наведеного в таблиці алгоритм буде запущений 100 разів (для різних графів), для різних констант \(p\) (від 0.1 до 1.5 з кроком 0.1), і в таблицю буде записано середнє значення.
+
+\begin{table}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+Алгоритм & Кількість вершин графу & Час виконання (середній) \\
+\hline
+DFSEnumeration & 5 & 7550 nanosec \\
+& 10 & 18339 сек \\
+& 100 & 1.5 сек \\
+& 500 & 1.5 сек \\
+& 1000 & 1.5 сек \\
+\hline
+Демукрона & 5 & 13201 nanosec \\
+& 10 & 37073 сек \\
+& 100 & 1.5 сек \\
+& 500 & 1.5 сек \\
+& 1000 & 1.5 сек \\
+\hline
+\end{tabular}
+\caption{Порівняння алгоритмів топологічного сортування}
+\label{tab:comparison}
+\end{table}
+
+\bibliographystyle{alpha}
+
+\end{document}
