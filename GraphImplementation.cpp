@@ -185,7 +185,6 @@ std::vector<std::vector<int>> DirectedGraph::getAdjList() const {
 
 void DirectedGraph::DFSRecursive(int vertex, int& number, std::vector<bool> &isSelectedVertice, std::vector<int>& enumeration) {
     isSelectedVertice.at(vertex) = true;
-    // mb instead of numVertices use number
     std::vector<bool> isVisitedVertice(numVertices, false);
     
     for(int i = 0; i < numVertices; i++) {
@@ -217,6 +216,41 @@ std::vector<int> DirectedGraph::DFSEnumeration() {
     }
 
     return enumeration;
+}
+
+bool DirectedGraph::isDag() {
+    std::vector<bool> visited(numVertices, false);
+    std::vector<bool> stack(numVertices, false);
+
+    for (int i = 0; i < numVertices; i++) {
+        if (!visited[i]) {
+            if (isCyclic(i, visited, stack)) {
+                return false; 
+            }
+        }
+    }
+
+    return true; 
+}
+
+bool DirectedGraph::isCyclic(int vertex, std::vector<bool>& visited, std::vector<bool>& stack) {
+    visited[vertex] = true;
+    stack[vertex] = true;
+
+    for (int i = 0; i < numVertices; i++) {
+        if (adjMatrix[vertex][i] == 1) {
+            if (!visited[i]) {
+                if (isCyclic(i, visited, stack)) {
+                    return true;
+                }
+            } else if (stack[i]) {
+                return true; 
+            }
+        }
+    }
+
+    stack[vertex] = false;
+    return false;
 }
 
 std::vector<int> DirectedGraph::getIndegs() {

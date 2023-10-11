@@ -59,6 +59,7 @@ private:
     void DFSRecursive(const int vertex, int& number, std::vector<bool>& isSelectedVertice, std::vector<int>& enumeration);
     void correctDifference(std::vector<int>& vec, const int pos);
     std::vector<int> getIndegs();
+    bool isCyclic(int vertex, std::vector<bool>& visited, std::vector<bool>& stack);
 public: 
     DirectedGraph(unsigned int _numVertices);
 
@@ -69,6 +70,7 @@ public:
 
     std::vector<int> DFSEnumeration();
     std::vector<int> DemukronsAlgorithm();
+    bool isDag();
 };
 
 class DirectedWeightedGraph : public DirectedGraph {

@@ -82,7 +82,9 @@ int main() {
     // graph2.addEdge(7, 3);
     // graph2.addEdge(7, 6);
     // graph2.addEdge(5, 7);
-    // // graph2.printAdjMatrix();
+    
+    // if(graph2.isDag())
+    //     graph2.printAdjMatrix();
 
     // auto enumeration2 = graph2.DemukronsAlgorithm();
 
@@ -91,14 +93,20 @@ int main() {
     //     std::cout << element << " ";
     // std::cout << std::endl;
 
-    UndirectedGraph ug(10);
-    ug.printAdjMatrix();
-    std::cout << std::endl;
-    ug.ErdosRenyiModelGeneration(1);
-    ug.printAdjMatrix();
-    
+    // std::cout << std::endl;
+    // ug.printAdjMatrix();
+    // ug.printAdjMatrix();
 
-
+    DirectedGraph ug(10);
+    int n = 100;
+    while(n) {
+        ug.ErdosRenyiModelGeneration(0.6);
+        
+        if(ug.isDag())
+            std::cout << n << " ";
+        
+        n--;
+    }
 
     return 0;
 }
