@@ -93,12 +93,6 @@ int main() {
         std::cout << element << " ";
     std::cout << std::endl;
 
-    std::cout << std::endl;
-    ug.printAdjMatrix();
-    ug.printAdjMatrix();
-    
-
-     
     return 0;
 }
 
